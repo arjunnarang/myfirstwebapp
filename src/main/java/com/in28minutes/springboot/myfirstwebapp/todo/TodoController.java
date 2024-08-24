@@ -35,21 +35,27 @@ public class TodoController {
 	// same function. So if we need the function to handle GET requests only we need to mention this
 	// @RequestMapping(value="/add-todo", method=RequestMethod.GET)
 	@RequestMapping(value="/add-todo", method=RequestMethod.GET)
-	public String showNewTodoPage() {
+	public String showNewTodoPage(ModelMap model) {
 		
+		//this hardcoded new todo object needs to be added so as to support form backing implemented in todo.jsp
+		String username = (String) model.get("name");
+		Todo todo = new Todo(0,username, "", LocalDate.now().plusYears(1), false);
+		
+		// modelAttribute added in todo.jsp can be find attribute named "todo" in model 
+		model.put("todo", todo);
 		return "todo";
 	}
 
 	//this function will handle POST requests like when we submit form POST request is hit so 
 	//those inputs will handled by this function
 	@RequestMapping(value="/add-todo", method=RequestMethod.POST)
-	public String addNewTodo(@RequestParam String description, ModelMap model) {
-		
+//	public String addNewTodo(@RequestParam String description, ModelMap model) {
+    public String addNewTodo(ModelMap model, Todo todo) {
 		//Getting username from model
 		String username = (String) model.get("name");
 		
 		//calling addTodo function
-		todoService.addTodo(username, description, LocalDate.now().plusYears(1), false);
+		todoService.addTodo(username, todo.getDescription(), LocalDate.now().plusYears(1), false);
 		// this return statement will redirect to emptu listTodos page
 		//empty because we havent written that logic of listing todos just like present in "listAllTodos" function
 		//so we redirect this function to "list-todos" page
