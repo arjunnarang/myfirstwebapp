@@ -64,10 +64,47 @@ public class TodoController {
 		String username = (String) model.get("name");
 		
 		//calling addTodo function
-		todoService.addTodo(username, todo.getDescription(), LocalDate.now().plusYears(1), false);
+		todoService.addTodo(username, todo.getDescription(),todo.getTargetDate(), false);
 		// this return statement will redirect to emptu listTodos page
 		//empty because we havent written that logic of listing todos just like present in "listAllTodos" function
 		//so we redirect this function to "list-todos" page
+		return "redirect:list-todos";
+	}
+	
+	@RequestMapping("/delete-todo")
+	public String deleteTodo(@RequestParam int id) {
+		
+		todoService.deleteById(id);
+		return "redirect:list-todos";
+	}
+	
+	//ModelMap is used whenever we need to add data to .jsp pages or retrieve already added data from jsp pages
+	//Here we took "id" as a param and then send it to todoService to find us the todo with that id
+	//then we added that todo to model and the paramter "todo" should be matching modelAttribute="todo" in todo.jsp
+	//nwow this model will populate the todo.jsp accordingly
+	
+	@RequestMapping(value="/update-todo", method=RequestMethod.GET)
+	public String showUpdateTodoPage(@RequestParam int id, ModelMap model) {
+		Todo todo = todoService.findById(id);
+		model.addAttribute(todo);
+		return "todo";
+	}
+	
+	@RequestMapping(value="/update-todo", method=RequestMethod.POST)
+	//When submit button is hit, this post method is hit and the input values are returned in "todo" object in following function through form backing
+	//(direct binding of form and java bean
+    public String updateTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
+		
+		//BindingResult helps in handling Size errors
+		if(result.hasErrors()) {
+			return "todo";
+		}
+		//Getting username from model
+		String username = (String) model.get("name");
+		
+		//calling addTodo function
+		todoService.updateTodo(todo);
+
 		return "redirect:list-todos";
 	}
 
