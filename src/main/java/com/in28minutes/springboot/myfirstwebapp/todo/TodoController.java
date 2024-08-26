@@ -3,6 +3,8 @@ package com.in28minutes.springboot.myfirstwebapp.todo;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -27,7 +29,8 @@ public class TodoController {
 	
 	@RequestMapping("/list-todos")
 	public String listAllTodos(ModelMap model) {
-		List<Todo> todos = todoService.findByUsername("in28minutes");
+		String username = getLoggedinUsername(model);
+		List<Todo> todos = todoService.findByUsername(username);
 		model.addAttribute("todos", todos);
 		
 		return "listTodos";
@@ -41,13 +44,14 @@ public class TodoController {
 	public String showNewTodoPage(ModelMap model) {
 		
 		//this hardcoded new todo object needs to be added so as to support form backing implemented in todo.jsp
-		String username = (String) model.get("name");
+		String username = getLoggedinUsername(model);
 		Todo todo = new Todo(0,username, "", LocalDate.now().plusYears(1), false);
 		
 		// modelAttribute added in todo.jsp can be find attribute named "todo" in model 
 		model.put("todo", todo);
 		return "todo";
 	}
+
 
 	//this function will handle POST requests like when we submit form POST request is hit so 
 	//those inputs will handled by this function
@@ -61,7 +65,7 @@ public class TodoController {
 			return "todo";
 		}
 		//Getting username from model
-		String username = (String) model.get("name");
+		String username = getLoggedinUsername(model);
 		
 		//calling addTodo function
 		todoService.addTodo(username, todo.getDescription(),todo.getTargetDate(), false);
@@ -100,12 +104,20 @@ public class TodoController {
 			return "todo";
 		}
 		//Getting username from model
-		String username = (String) model.get("name");
+		String username = getLoggedinUsername(model);
 		
 		//calling addTodo function
 		todoService.updateTodo(todo);
 
 		return "redirect:list-todos";
+	}
+	
+	//We can get username through model but only when we go to login page and put our credentials.
+	//If a user directly go to list todos page, the session wont have the username stored
+	//So we use spring security to get the username everywhere
+	private String getLoggedinUsername(ModelMap model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();;
+		return authentication.getName();
 	}
 
 }
