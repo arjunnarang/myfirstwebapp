@@ -43,7 +43,7 @@ public class TodoController {
 	@RequestMapping(value="/add-todo", method=RequestMethod.GET)
 	public String showNewTodoPage(ModelMap model) {
 		
-		//this hardcoded new todo object needs to be added so as to support form backing implemented in todo.jsp
+		//this hardcoded new todo object needs to be added so as to support "form backing" implemented in todo.jsp
 		String username = getLoggedinUsername(model);
 		Todo todo = new Todo(0,username, "", LocalDate.now().plusYears(1), false);
 		
