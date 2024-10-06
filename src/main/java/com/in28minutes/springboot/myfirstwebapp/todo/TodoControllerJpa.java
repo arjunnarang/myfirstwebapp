@@ -47,7 +47,7 @@ public class TodoControllerJpa {
 		
 		//this hardcoded new todo object needs to be added so as to support "form backing" implemented in todo.jsp
 		String username = getLoggedinUsername(model);
-		Todo todo = new Todo(0,username, "", LocalDate.now().plusYears(1), false);
+		Todo todo = new Todo(0,username, "", LocalDate.now().plusYears(1), "false");
 		
 		// modelAttribute added in todo.jsp can be find attribute named "todo" in model 
 		model.put("todo", todo);
@@ -70,6 +70,8 @@ public class TodoControllerJpa {
 		String username = getLoggedinUsername(model);
 		todo.setUsername(username);
 		
+		if(todo.getDone() == null)
+			todo.setDone("false");
 		todoRepository.save(todo);
 		
 		
@@ -115,6 +117,8 @@ public class TodoControllerJpa {
 		todo.setUsername(username);
 		//calling addTodo function
 		//todoService.updateTodo(todo);
+		if(todo.getDone() == null)
+			todo.setDone("false");
 		todoRepository.save(todo);
 
 		return "redirect:list-todos";

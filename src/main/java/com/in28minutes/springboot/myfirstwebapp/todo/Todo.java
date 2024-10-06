@@ -17,7 +17,7 @@ public class Todo {
 		
 	}
 
-	public Todo(int id, String username, String description, LocalDate targetDate, boolean done) {
+	public Todo(int id, String username, String description, LocalDate targetDate, String done) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -34,7 +34,7 @@ public class Todo {
 	@Size(min=10, message="Enter atleast 10 characters")
 	private String description;
 	private LocalDate targetDate;
-	private boolean done;
+	private String done = "false";
 
 	public int getId() {
 		return id;
@@ -68,11 +68,11 @@ public class Todo {
 		this.targetDate = targetDate;
 	}
 
-	public boolean isDone() {
+	public String getDone() {
 		return done;
 	}
 
-	public void setDone(boolean done) {
+	public void setDone(String done) {
 		this.done = done;
 	}
 

@@ -17,17 +17,17 @@ public class TodoService {
 	
 	static {
 		todos.add(new Todo(++todosCount, "in28minutes","Learn AWS", 
-							LocalDate.now().plusYears(1), false ));
+							LocalDate.now().plusYears(1), "false" ));
 		todos.add(new Todo(++todosCount, "in28minutes","Learn DevOps", 
-				LocalDate.now().plusYears(2), false ));
+				LocalDate.now().plusYears(2), "false" ));
 		todos.add(new Todo(++todosCount, "in28minutes","Learn Full Stack Development", 
-				LocalDate.now().plusYears(3), false ));
+				LocalDate.now().plusYears(3), "false" ));
 		todos.add(new Todo(++todosCount, "Arjun","Learn springboot", 
-				LocalDate.now().plusYears(1), false ));
+				LocalDate.now().plusYears(1), "false" ));
         todos.add(new Todo(++todosCount, "Arjun","Learn git", 
-        		LocalDate.now().plusYears(2), false ));
+        		LocalDate.now().plusYears(2), "false" ));
         todos.add(new Todo(++todosCount, "Arjun","Learn sql", 
-        		LocalDate.now().plusYears(3), false ));
+        		LocalDate.now().plusYears(3), "false" ));
 	}
 	
 	public List<Todo> findByUsername(String username){
@@ -38,7 +38,7 @@ public class TodoService {
 		return todos.stream().filter(predicate).toList();
 	}
 	
-	public void addTodo(String username, String description, LocalDate targetDate, boolean done) {
+	public void addTodo(String username, String description, LocalDate targetDate, String done) {
 		Todo todo = new Todo(++todosCount, username, description, targetDate, done);
 		todos.add(todo);
 	}

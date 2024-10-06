@@ -45,7 +45,7 @@ public class TodoController {
 		
 		//this hardcoded new todo object needs to be added so as to support "form backing" implemented in todo.jsp
 		String username = getLoggedinUsername(model);
-		Todo todo = new Todo(0,username, "", LocalDate.now().plusYears(1), false);
+		Todo todo = new Todo(0,username, "", LocalDate.now().plusYears(1), "false");
 		
 		// modelAttribute added in todo.jsp can be find attribute named "todo" in model 
 		model.put("todo", todo);
@@ -68,7 +68,7 @@ public class TodoController {
 		String username = getLoggedinUsername(model);
 		
 		//calling addTodo function
-		todoService.addTodo(username, todo.getDescription(),todo.getTargetDate(), false);
+		todoService.addTodo(username, todo.getDescription(),todo.getTargetDate(), "false");
 		// this return statement will redirect to emptu listTodos page
 		//empty because we havent written that logic of listing todos just like present in "listAllTodos" function
 		//so we redirect this function to "list-todos" page
