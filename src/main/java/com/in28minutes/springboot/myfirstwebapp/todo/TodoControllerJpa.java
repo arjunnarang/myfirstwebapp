@@ -19,14 +19,16 @@ import jakarta.validation.Valid;
 @SessionAttributes("name")
 public class TodoControllerJpa {
 	
-	public TodoControllerJpa(TodoRepository todoRepository) {
+	public TodoControllerJpa(TodoRepository todoRepository, TodoEmailService todoEmailService) {
 		super();
 		//this.todoService = todoService;
 		this.todoRepository = todoRepository;
+		this.todoEmailService = todoEmailService;
 	}
 
 	//private TodoService todoService;
 	private TodoRepository todoRepository;
+	private TodoEmailService todoEmailService;
 	
 	@RequestMapping("/list-todos")
 	public String listAllTodos(ModelMap model) {
@@ -76,6 +78,8 @@ public class TodoControllerJpa {
 		
 		
 		//todoService.addTodo(username, todo.getDescription(),todo.getTargetDate(), todo.isDone());
+		TodoEmail todoEmail = new TodoEmail("rox.montez1009@gmail.com", "A new todo has been added", "Add todo");
+		todoEmailService.sendEmail(todoEmail);
 
 		return "redirect:list-todos";
 	}
@@ -84,6 +88,9 @@ public class TodoControllerJpa {
 	public String deleteTodo(@RequestParam int id) {
 		
 		todoRepository.deleteById(id);
+		
+		TodoEmail todoEmail = new TodoEmail("rox.montez1009@gmail.com", "A todo has been deleted", "Delete todo");
+		todoEmailService.sendEmail(todoEmail);
 		
 		//todoService.deleteById(id);
 		return "redirect:list-todos";
@@ -120,7 +127,10 @@ public class TodoControllerJpa {
 		if(todo.getDone() == null)
 			todo.setDone("false");
 		todoRepository.save(todo);
-
+		
+		TodoEmail todoEmail = new TodoEmail("rox.montez1009@gmail.com", "A todo has been updated", "Update todo");
+		todoEmailService.sendEmail(todoEmail);
+		
 		return "redirect:list-todos";
 	}
 	
