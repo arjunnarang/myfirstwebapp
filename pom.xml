@@ -27,6 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
+		<spring-cloud-gcp-dependencies-scope>import</spring-cloud-gcp-dependencies-scope>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
@@ -97,6 +98,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>spring-cloud-gcp-dependencies</artifactId>
+			<version>5.7.0</version>
+			<type>pom</type>
+			<scope>import</scope>
 		</dependency>
 	</dependencies>
 
