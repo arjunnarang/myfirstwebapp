@@ -78,7 +78,7 @@ public class TodoControllerJpa {
 		
 		
 		//todoService.addTodo(username, todo.getDescription(),todo.getTargetDate(), todo.isDone());
-		TodoEmail todoEmail = new TodoEmail("recipient@xyz.com", "A new todo has been added", "Add todo");
+		TodoEmail todoEmail = new TodoEmail("rox.montez1009@gmail.com", "A new todo has been added", "Add todo");
 		todoEmailService.sendEmail(todoEmail);
 
 		return "redirect:list-todos";
