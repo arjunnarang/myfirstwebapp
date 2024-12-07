@@ -11,6 +11,7 @@
 	<groupId>com.in28minutes.springboot</groupId>
 	<artifactId>myfirstwebapp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<!--<packaging>war</packaging>-->
 	<name>myfirstwebapp</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -99,6 +100,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		 <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>spring-cloud-gcp-dependencies</artifactId>
@@ -115,6 +120,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>task-manager</finalName>
 	</build>
 	<repositories>
 		<repository>

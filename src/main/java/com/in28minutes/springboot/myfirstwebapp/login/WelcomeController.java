@@ -17,9 +17,13 @@ public class WelcomeController {
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
+	
+	
 	//We use get method when we need to hit a welcome page
 	@RequestMapping(value="/",method = RequestMethod.GET)
 	public String gotoWelcomePage(ModelMap model) {
+		
+		
 		model.put("name", getLoggedinUsername());
 		return "welcome";
 	}
